@@ -29,7 +29,7 @@ the changes in src/main/resources/application.properties file.
 
 -   Install JDK 8
 
--   Install maven 3
+-   Install maven 3 (settings.xml is provided in case you face issue connecting to publc repo)
 
 -   Docker latest
 
