@@ -2,6 +2,7 @@ package com.hegde.survey.api.manager.service;
 
 import com.hegde.survey.api.manager.dao.SurveyManagerDao;
 import com.hegde.survey.api.manager.dao.UserDaoImpl;
+import com.hegde.survey.api.manager.exception.NoDataException;
 import com.hegde.survey.api.manager.model.Question;
 import com.hegde.survey.api.manager.model.QuestionResponse;
 import com.hegde.survey.api.manager.model.ResponseChart;
@@ -30,7 +31,7 @@ public class SurveyAdminServiceImpl implements SurveyAdminService {
 
 
     @Override
-    public void addUser(User user) throws UnsupportedEncodingException {
+    public void addUser(User user){
         LOGGER.debug("Request to add new user {}", user.getUsername());
         userDao.insertNewUser(user);
         LOGGER.debug("Processed request to add new user {}", user.getUsername());
@@ -40,6 +41,9 @@ public class SurveyAdminServiceImpl implements SurveyAdminService {
     public User getUserDetails(String username) {
         LOGGER.debug("Request to get user info for username: {}", username);
         User user = userDao.getUserDetails(username);
+        if(user == null){
+            throw new NoDataException("No user found with username: " + username);
+        }
         LOGGER.debug("Processed request to get user info for username: {}", username);
         return user;
     }

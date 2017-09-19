@@ -2,7 +2,8 @@ package com.hegde.survey.api.manager.dao;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hegde.survey.api.manager.exception.MissingDataException;
+import com.hegde.survey.api.manager.exception.InvalidDataException;
+import com.hegde.survey.api.manager.exception.NoDataException;
 import com.hegde.survey.api.manager.model.*;
 import org.postgresql.util.PGobject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +52,7 @@ public class SurveyManagerDaoImpl implements SurveyManagerDao{
                     String json = new ObjectMapper().writeValueAsString(question.getOptions());
                     ps.setObject(3, json);
                 }catch (JsonProcessingException e) {
-                    throw new RuntimeException(e);
+                    throw new InvalidDataException("Failed to parse options json ", e);
                 }
             }
             @Override
@@ -79,7 +80,7 @@ public class SurveyManagerDaoImpl implements SurveyManagerDao{
             jsonObject.setType("json");
             jsonObject.setValue(json);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new InvalidDataException("Failed to parse options to json ", e);
         }
         String sql = "UPDATE survey_details SET question_id = (?), question = (?), options = (?) WHERE question_id = (?)";
         getJdbcTemplate().update(sql, new Object[]{Integer.parseInt(questionId), question.getQuestionDesc(), jsonObject, Integer.parseInt(questionId)});
@@ -105,7 +106,7 @@ public class SurveyManagerDaoImpl implements SurveyManagerDao{
         questionResponse.setQuestionId(questionId);
 
         if(response == null || response.isEmpty()){
-            throw new MissingDataException("No data found");
+            throw new NoDataException("No data found for questionId: " + questionId);
         }
 
         questionResponse.setQuestionDesc(response.get(0).getQuestionDesc());

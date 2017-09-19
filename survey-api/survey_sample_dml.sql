@@ -16,7 +16,7 @@ INSERT INTO survey_details (survey_id, question, options) VALUES (2, 'Who is you
   "f":"Arya",
   "g":"Sansa",
   "h":"Others",
-  "i":"I dont watch GOT"
+  "i":"I don't watch GOT"
 }');
 INSERT INTO survey_response (question_id,response) VALUES (1,'a');
 INSERT INTO survey_response (question_id,response) VALUES (2,'a');

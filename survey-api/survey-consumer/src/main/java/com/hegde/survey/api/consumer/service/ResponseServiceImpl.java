@@ -1,6 +1,7 @@
 package com.hegde.survey.api.consumer.service;
 
 import com.hegde.survey.api.consumer.dao.SurveyDao;
+import com.hegde.survey.api.consumer.exception.NoDataException;
 import com.hegde.survey.api.consumer.model.Question;
 import com.hegde.survey.api.consumer.model.SurveyDetails;
 import com.hegde.survey.api.consumer.model.SurveyResponse;
@@ -25,6 +26,9 @@ public class ResponseServiceImpl implements ResponseService {
     }
 
     private SurveyDetails buildSurveyDetails(List<Question> questions, int surveyId) {
+        if(questions == null || questions.isEmpty()){
+            throw new NoDataException("No data found for " + surveyId);
+        }
         return new SurveyDetails(Integer.toString(surveyId), questions);
     }
 

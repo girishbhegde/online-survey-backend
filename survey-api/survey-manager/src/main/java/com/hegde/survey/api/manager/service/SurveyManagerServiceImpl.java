@@ -1,6 +1,7 @@
 package com.hegde.survey.api.manager.service;
 
 import com.hegde.survey.api.manager.dao.SurveyManagerDao;
+import com.hegde.survey.api.manager.exception.NoDataException;
 import com.hegde.survey.api.manager.model.Question;
 import com.hegde.survey.api.manager.model.QuestionResponse;
 import com.hegde.survey.api.manager.model.ResponseChart;
@@ -28,7 +29,11 @@ public class SurveyManagerServiceImpl implements SurveyManagerService {
 
     @Override
     public List<Question> getQuestions(String surveyId) {
-        return surveyManagerDao.getQuestions(surveyId);
+        List<Question> questions = surveyManagerDao.getQuestions(surveyId);
+        if(questions==null || questions.isEmpty()){
+            throw new NoDataException("Couldn't find any questions for survey: " + surveyId);
+        }
+        return questions;
     }
 
     @Override
@@ -48,12 +53,19 @@ public class SurveyManagerServiceImpl implements SurveyManagerService {
 
     @Override
     public QuestionResponse getResponses(String questionId) {
-        return surveyManagerDao.getResponses(questionId);
+        QuestionResponse questionResponse = surveyManagerDao.getResponses(questionId);
+        if(questionResponse == null){
+            throw new NoDataException("No responses found for questionId: " + questionId);
+        }
+        return questionResponse;
     }
 
     @Override
     public ResponseChart getResponseChart(String questionId) {
         QuestionResponse questionResp = surveyManagerDao.getResponses(questionId);
+        if(questionResp == null){
+            throw new NoDataException("No responses were found for questionId: " + questionId);
+        }
         ResponseChart responseChart = new ResponseChart();
         Map<String, Float> responseMap = new HashMap<>();
         responseChart.setQuestionId(questionResp.getQuestionId());
@@ -74,7 +86,7 @@ public class SurveyManagerServiceImpl implements SurveyManagerService {
     }
 
     @Override
-    public int createSurvey(List<Question> questions, String userId) {
-        return surveyManagerDao.createSurvey(questions, userId);
+    public int createSurvey(List<Question> questions, String username) {
+        return surveyManagerDao.createSurvey(questions, username);
     }
 }
