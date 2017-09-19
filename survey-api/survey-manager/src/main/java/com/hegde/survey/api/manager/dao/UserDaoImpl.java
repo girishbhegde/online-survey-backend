@@ -28,7 +28,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
     }
 
     @Override
-    public void insertNewUser(User user) throws UnsupportedEncodingException {
+    public void insertNewUser(User user){
         long start = System.currentTimeMillis();
         String sql = "INSERT INTO users (username, name, email, created_on) VALUES (?, ?, ?, ?)" ;
         getJdbcTemplate().update(sql, new Object[]{

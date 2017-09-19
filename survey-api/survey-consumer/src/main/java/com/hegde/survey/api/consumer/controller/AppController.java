@@ -15,17 +15,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 /**
  * Created by ghegde on 6/25/17.
  */
 @RestController
+@RequestMapping(value = "/survey", produces = {APPLICATION_JSON_VALUE})
 public class AppController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AppController.class);
 
     @Autowired
     private ResponseService service ;
 
-    @RequestMapping(value = "/survey/questions", method = RequestMethod.GET)
+    @RequestMapping(value = "/questions", method = RequestMethod.GET)
     public SurveyDetails getQuestions(@RequestParam("survey-id") int surveyId,
                                     HttpServletResponse response){
         LOGGER.debug("Request: Fetching questions for survey: {}", surveyId);
@@ -40,7 +43,7 @@ public class AppController {
         return surveyDetails;
     }
 
-    @RequestMapping(value = "/survey/submit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/submit", method = RequestMethod.PUT)
     public void submit(@RequestParam("survey-id") String surveyId,
                          @RequestBody SurveyResponse[] payload,
                          HttpServletResponse response){

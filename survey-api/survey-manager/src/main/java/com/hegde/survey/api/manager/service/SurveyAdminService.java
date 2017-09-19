@@ -18,7 +18,7 @@ public interface SurveyAdminService {
      * @param user
      * @return
      */
-    void addUser(User user) throws UnsupportedEncodingException;
+    void addUser(User user);
 
     /**
      * Get all non sensitive User details

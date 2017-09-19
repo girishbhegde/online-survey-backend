@@ -11,9 +11,8 @@ public interface UserDao {
     /**
      * Add a new User into DB
      * @param user
-     * @throws UnsupportedEncodingException
      */
-    void insertNewUser(User user) throws UnsupportedEncodingException;
+    void insertNewUser(User user);
 
     /**
      * Get User details from DB
