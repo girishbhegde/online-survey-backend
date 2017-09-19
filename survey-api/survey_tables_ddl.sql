@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS surveys;
-DROP TABLE IF EXISTS survey_details;
 DROP TABLE IF EXISTS survey_response;
+DROP TABLE IF EXISTS survey_details;
+DROP TABLE IF EXISTS surveys;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
  username VARCHAR (50) PRIMARY KEY NOT NULL,
