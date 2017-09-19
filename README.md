@@ -98,7 +98,7 @@ on which survey-manager is running(8082)
 API docs are also available in file
 *[api-docs.txt](survey-api/api-docs.txt)*
 
-**scope for improvement**
+**Scope for improvement**
 -   Introduce a distributed cache layer (probably redis) to cache the questions for most commonly accessed surveys.
 -   Junits completion for survey-manager module
 -   Validation of survey response to make sure all questions are answered (Could be handled in UI)
