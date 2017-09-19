@@ -65,10 +65,10 @@ cd to path where survey-api is downloaded/cloned.
 <!-- -->
 
 -   Create required tables by running contents from
- *[survey\_tables\_ddl.sql](survey-api/survey\_tables\_ddl.sql)*
+ *[survey\_tables\_ddl.sql](online-survey-backend/survey-api/survey\_tables\_ddl.sql)*
 
 -   Create sample data by running contents from survey\_sample\_dml.sql
-*[survey\_sample\_dml.sql](survey-api/survey\_sample\_dml.sql)*
+*[survey\_sample\_dml.sql](online-survey-backend/survey-api/survey\_sample\_dml.sql)*
 
 **Start survey-consumer container:**
 
@@ -95,7 +95,8 @@ You can access swagger docs by accessing below URL:
 You can access survey manager similarly by accessing same link with port
 on which survey-manager is running(8082)
 
-API docs are also available in file api-docs.txt
+API docs are also available in file
+*[api-docs.txt] (online-survey-backend/survey-api/api-docs.txt)*
 
 **scope for improvement**
 -   Introduce a distributed cache layer (probably redis) to cache the questions for most commonly accessed surveys.

@@ -1,0 +1,237 @@
+Admin Backend API:
+1. [PUT] localhost:8080/admin/user
+Body:
+{
+	"username":"joe",
+	"name":"joe a",
+	"email":"joe@xyz.com"
+}
+Response: 201
+
+2. [GET] localhost:8080/admin/user?username=joe
+Response: 200
+{
+    "username": "joe",
+    "email": "joe@xyz.com",
+    "name": "joe a",
+    "created-on": "2017-09-17 17:18:58.504"
+}
+
+
+
+Manager Backend API:
+1.[PUT] localhost:9876/manager/survey?username=joe
+[
+  {
+      "question": "How do you like our new AI game?",
+      "options": {
+          "a":"loving it!",
+          "b":"I like it",
+          "c":"its okay. time pass..",
+          "d":"not so good",
+          "e":"worst game of the century"
+      }
+  },
+  {
+      "question": "What are the chances you would recommend this game to others?",
+      "options": {
+          "a":"I already did and will keep doing it",
+          "b":"I might do",
+          "c":"I may not do it",
+          "d":"I would rather die"
+      }
+  },
+  {
+      "question": "Would you be interested in our paid services?",
+      "options": {
+          "a":"Yes bring it on!",
+          "b":"I might be interested",
+          "c":"I dont know",
+          "d":"No. I like free stuff",
+          "e":"Are you crazy? who would pay for it?"
+      }
+  },{
+  	"question": "Are you above 18 years of age?",
+      "options": {
+          "a":"Yes",
+          "b":"No"
+      }
+  }
+]
+Response: 200
+{
+    "survey-id": "1"
+}
+
+2. [GET] localhost:9876/manager/questions?survey-id=1
+Response: 200
+[
+    {
+        "queston-id": "1",
+        "question": "How do you like our new AI game?",
+        "options": {
+            "a": "loving it!",
+            "b": "I like it",
+            "c": "its okay. time pass..",
+            "d": "not so good",
+            "e": "worst game of the century"
+        }
+    },
+    {
+        "queston-id": "2",
+        "question": "What are the chances you would recommend this game to others?",
+        "options": {
+            "a": "I already did and will keep doing it",
+            "b": "I might do",
+            "c": "I may not do it",
+            "d": "I would rather die"
+        }
+    },
+    {
+        "queston-id": "3",
+        "question": "Would you be interested in our paid services?",
+        "options": {
+            "a": "Yes bring it on!",
+            "b": "I might be interested",
+            "c": "I dont know",
+            "d": "No. I like free stuff",
+            "e": "Are you crazy? who would pay for it?"
+        }
+    },
+    {
+        "queston-id": "4",
+        "question": "Are you above 18 years of age?",
+        "options": {
+            "a": "Yes",
+            "b": "No"
+        }
+    }
+]
+
+3. [PUT] localhost:9876/manager/questions?survey-id=1
+Body:
+[
+	{
+        "question": "Have you ever played our game before?",
+        "options": {
+            "a": "Yes",
+            "b": "No",
+            "c":"Don't remember"
+        }
+    }
+]
+Response: 201
+
+4. [POST] localhost:9876/manager/question?question-id=1
+Body:
+{
+    "question": "Have you ever played our new AI game before?",
+    "options": {
+        "a": "Yes",
+        "b": "No",
+        "c":"Don't remember"
+    }
+}
+Response: 201
+
+5. [DELETE] localhost:9876/manager/question?question-id=5
+Response: 202
+
+6. [GET]  localhost:9876/manager/responses?question-id=1
+Response: 200
+{
+    "queston-id": "1",
+    "question": "Have you ever played our new AI game before?",
+    "responses": [
+        "Don't remember",
+        "Don't remember",
+        "Don't remember",
+        "Yes",
+        "Yes",
+        "Yes",
+        "No"
+    ]
+}
+
+7. [GET]  localhost:9876/manager/responses/analyze?question-id=1
+Response: 200
+{
+    "question-id": "1",
+    "question": "Have you ever played our new AI game before?",
+    "response-count": 7,
+    "distribution": {
+        "No": 14.29,
+        "Don't remember": 42.86,
+        "Yes": 42.86
+    }
+}
+
+
+
+Survey-Consumer Backend API:
+1. [GET]  localhost:9877/survey/questions?survey-id=1
+Response: 200
+{
+    "survey-id": "1",
+    "questions": [
+        {
+            "queston-id": "2",
+            "question": "What are the chances you would recommend this game to others?",
+            "options": {
+                "a": "I already did and will keep doing it",
+                "b": "I might do",
+                "c": "I may not do it",
+                "d": "I would rather die"
+            }
+        },
+        {
+            "queston-id": "3",
+            "question": "Would you be interested in our paid services?",
+            "options": {
+                "a": "Yes bring it on!",
+                "b": "I might be interested",
+                "c": "I dont know",
+                "d": "No. I like free stuff",
+                "e": "Are you crazy? who would pay for it?"
+            }
+        },
+        {
+            "queston-id": "4",
+            "question": "Are you above 18 years of age?",
+            "options": {
+                "a": "Yes",
+                "b": "No"
+            }
+        },
+        {
+            "queston-id": "1",
+            "question": "Have you ever played our new AI game before?",
+            "options": {
+                "a": "Yes",
+                "b": "No",
+                "c": "Don't remember"
+            }
+        }
+    ]
+}
+
+2. [POST]   localhost:9877/survey/submit?survey-id=1
+Body:
+[
+    {
+      "question-id":"1",
+      "answer-option":"c"
+    },
+    {
+      "question-id":"2",
+      "answer-option":"b"
+    },{
+      "question-id":"3",
+      "answer-option":"c"
+    },
+    {
+      "question-id":"4",
+      "answer-option":"a"
+    }
+]
+Response: 201
