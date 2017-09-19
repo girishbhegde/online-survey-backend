@@ -96,7 +96,7 @@ You can access survey manager similarly by accessing same link with port
 on which survey-manager is running(8082)
 
 API docs are also available in file
-*[api-docs.txt] (survey-api/api-docs.txt)*
+*[api-docs.txt](survey-api/api-docs.txt)*
 
 **scope for improvement**
 -   Introduce a distributed cache layer (probably redis) to cache the questions for most commonly accessed surveys.
