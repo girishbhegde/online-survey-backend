@@ -55,7 +55,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
         }catch (EmptyResultDataAccessException e){
             throw new NoDataException("No data found for given username", e);
         }
-        if(user!=null){
+        if(user==null){
             throw new NoDataException("No data found for given username");
         }
         LOGGER.info("processed insert user in {} ms for user {}", start, user.getUsername());
