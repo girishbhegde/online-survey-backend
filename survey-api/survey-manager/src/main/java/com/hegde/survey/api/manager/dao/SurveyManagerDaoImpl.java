@@ -91,7 +91,7 @@ public class SurveyManagerDaoImpl implements SurveyManagerDao{
         String sql1 = "SELECT options from survey_details WHERE question_id=(?)";
         List<Map<String, String>> optionsMapArray = (List<Map<String, String>>) getJdbcTemplate().query(sql1, new Object[]{Integer.parseInt(questionId)}, new OptionsRowMapper());
         
-        if(optionsMapArray == null || optionsMapArray.size() == 1){
+        if(optionsMapArray == null || optionsMapArray.size() == 0){
             throw new RuntimeException("No Response found for questionId: " + questionId);
         }
         
