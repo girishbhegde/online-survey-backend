@@ -6,7 +6,7 @@ INSERT INTO survey_details (survey_id, question, options) VALUES (1, 'Do you fol
   "b":"no",
   "c":"not fully"
 }');
-INSERT INTO survey_details (survey_id, question, options) VALUES (2, 'Who is your favourite GOT charecter?',
+INSERT INTO survey_details (survey_id, question, options) VALUES (1, 'Who is your favourite GOT charecter?',
 '{
   "a":"Jon snow",
   "b":"Daenerys",
