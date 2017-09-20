@@ -90,8 +90,12 @@ public class SurveyManagerDaoImpl implements SurveyManagerDao{
     public QuestionResponse getResponses(String questionId) {
         String sql1 = "SELECT options from survey_details WHERE question_id=(?)";
         List<Map<String, String>> optionsMapArray = (List<Map<String, String>>) getJdbcTemplate().query(sql1, new Object[]{Integer.parseInt(questionId)}, new OptionsRowMapper());
-
-        if(optionsMapArray == null || optionsMapArray.size()!= 1){
+        
+        if(optionsMapArray == null || optionsMapArray.size() == 1){
+            throw new RuntimeException("No Response found for questionId: " + questionId);
+        }
+        
+        if(optionsMapArray != null && optionsMapArray.size() > 1){
             throw new RuntimeException("A question should not have more than one option json. Question " + questionId + " has " + optionsMapArray.size());
         }
 
