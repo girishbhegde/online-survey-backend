@@ -1,9 +1,11 @@
 package com.hegde.survey.api.manager.dao;
 
+import com.hegde.survey.api.manager.exception.NoDataException;
 import com.hegde.survey.api.manager.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Service;
 
@@ -40,14 +42,22 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
     public User getUserDetails(String username) {
         long start = System.currentTimeMillis();
         String sql = "SELECT username, name, email, created_on FROM users WHERE username=(?)";
-        User user = getJdbcTemplate().queryForObject(sql, new Object[]{username}, (resultSet, i) -> {
-            User user1 = new User();
-            user1.setUsername(resultSet.getString("username"));
-            user1.setName(resultSet.getString("name"));
-            user1.setEmail(resultSet.getString("email"));
-            user1.setCreateOn(resultSet.getString("created_on"));
-            return user1;
-        });
+        User user;
+        try {
+            user = getJdbcTemplate().queryForObject(sql, new Object[]{username}, (resultSet, i) -> {
+                User user1 = new User();
+                user1.setUsername(resultSet.getString("username"));
+                user1.setName(resultSet.getString("name"));
+                user1.setEmail(resultSet.getString("email"));
+                user1.setCreateOn(resultSet.getString("created_on"));
+                return user1;
+            });
+        }catch (EmptyResultDataAccessException e){
+            throw new NoDataException("No data found for given username", e);
+        }
+        if(user!=null){
+            throw new NoDataException("No data found for given username");
+        }
         LOGGER.info("processed insert user in {} ms for user {}", start, user.getUsername());
         return user;
     }
